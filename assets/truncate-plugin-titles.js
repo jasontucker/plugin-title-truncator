@@ -13,16 +13,11 @@ function truncatePluginTitlesInSearchResults() {
     const pluginTitleLinks = document.querySelectorAll('.plugin-card .name.column-name h3 a');
 
     pluginTitleLinks.forEach((link) => {
-        const pluginIcon = link.querySelector('.plugin-icon');
-        const originalTitle = link.textContent.trim();
+        const originalTitle = link.childNodes[0].textContent.trim();
         const truncatedTitle = truncateTitleToNWords(originalTitle);
 
         if (originalTitle !== truncatedTitle) {
-            link.textContent = truncatedTitle;
-
-            if (pluginIcon) {
-                link.appendChild(pluginIcon);
-            }
+            link.childNodes[0].textContent = truncatedTitle;
         }
     });
 }
