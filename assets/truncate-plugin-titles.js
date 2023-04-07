@@ -18,12 +18,9 @@ function truncatePluginTitlesInSearchResults() {
         const truncatedTitle = truncateTitleToNWords(originalTitle);
 
         if (originalTitle !== truncatedTitle) {
-            const newLink = link.cloneNode(false);
+            link.removeChild(link.childNodes[0]);
             const newTitleNode = document.createTextNode(truncatedTitle);
-
-            newLink.appendChild(newTitleNode);
-            newLink.appendChild(pluginIcon);
-            link.parentNode.replaceChild(newLink, link);
+            link.insertBefore(newTitleNode, pluginIcon);
         }
     });
 }
