@@ -14,17 +14,16 @@ function truncatePluginTitlesInSearchResults() {
 
     pluginTitleLinks.forEach((link) => {
         const pluginIcon = link.querySelector('.plugin-icon');
-        const originalTitleNode = link.childNodes[0];
-        const originalTitle = originalTitleNode.textContent.trim();
+        const originalTitle = link.childNodes[0].textContent.trim();
         const truncatedTitle = truncateTitleToNWords(originalTitle);
 
         if (originalTitle !== truncatedTitle) {
+            const newLink = link.cloneNode(false);
             const newTitleNode = document.createTextNode(truncatedTitle);
-            link.replaceChild(newTitleNode, originalTitleNode);
 
-            if (pluginIcon) {
-                link.appendChild(pluginIcon);
-            }
+            newLink.appendChild(newTitleNode);
+            newLink.appendChild(pluginIcon);
+            link.parentNode.replaceChild(newLink, link);
         }
     });
 }
