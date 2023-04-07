@@ -10,17 +10,19 @@ function truncateTitleToNWords(title, nWords = 4) {
 }
 
 function truncatePluginTitlesInSearchResults() {
-    const pluginTitles = document.querySelectorAll('.plugin-card h3');
+    const pluginTitleLinks = document.querySelectorAll('.plugin-card .name.column-name h3 a');
 
-    pluginTitles.forEach((title) => {
-        const titleTextNode = Array.from(title.childNodes).find(node => node.nodeType === 3);
-        if (!titleTextNode) return;
-
-        const originalTitle = titleTextNode.textContent.trim();
+    pluginTitleLinks.forEach((link) => {
+        const pluginIcon = link.querySelector('.plugin-icon');
+        const originalTitle = link.textContent.trim();
         const truncatedTitle = truncateTitleToNWords(originalTitle);
 
         if (originalTitle !== truncatedTitle) {
-            titleTextNode.textContent = ' ' + truncatedTitle;
+            link.textContent = truncatedTitle;
+
+            if (pluginIcon) {
+                link.appendChild(pluginIcon);
+            }
         }
     });
 }
