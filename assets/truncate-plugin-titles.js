@@ -13,11 +13,18 @@ function truncatePluginTitlesInSearchResults() {
     const pluginTitleLinks = document.querySelectorAll('.plugin-card .name.column-name h3 a');
 
     pluginTitleLinks.forEach((link) => {
-        const originalTitle = link.childNodes[0].textContent.trim();
+        const pluginIcon = link.querySelector('.plugin-icon');
+        const originalTitleNode = link.childNodes[0];
+        const originalTitle = originalTitleNode.textContent.trim();
         const truncatedTitle = truncateTitleToNWords(originalTitle);
 
         if (originalTitle !== truncatedTitle) {
-            link.childNodes[0].textContent = truncatedTitle;
+            const newTitleNode = document.createTextNode(truncatedTitle);
+            link.replaceChild(newTitleNode, originalTitleNode);
+
+            if (pluginIcon) {
+                link.appendChild(pluginIcon);
+            }
         }
     });
 }
